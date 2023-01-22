@@ -2,13 +2,18 @@ const short = document.querySelector(".buttons__short")
 const countdown = document.querySelector(".countdown")
 
 function startTimer () {
-  let duration = this.dataset.time * 60;
-  setInterval( function () { //30
+  let duration = this.dataset.time;
+  const myInterval = setInterval( function () { //30
     duration --
-    let minutes = Math.floor(duration / 60);
-    console.log(duration)
-    countdown.innerHTML = minutes
-  }, 1000);
+    let minutes = Math.floor(duration / 60)
+    let unflooredMinutes = duration / 60
+    let extraSeconds = duration % 60;
+    extraSeconds < 10 ? extraSeconds = '0' + extraSeconds : extraSeconds
+    if (unflooredMinutes === 0) {
+      myInterval(clearInterval)
+    } 
+    countdown.innerHTML = minutes + ':' + extraSeconds
+  }, 10);
 }
 
 short.addEventListener("click", startTimer)
