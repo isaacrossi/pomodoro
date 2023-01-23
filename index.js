@@ -7,12 +7,14 @@ const start = document.querySelector(".start-button")
 const buttons = document.querySelectorAll('div.buttons button')
 
 let duration;
+const audio = new Audio('alarm.mp3')
 
-function startTimer() { 
+function startTimer() {
 
   buttons.forEach(button => {
     button.addEventListener('click', () => {
       clearInterval(myInterval)
+      // alert("Are you sure you want to select another option? Doing so will stop the current timer.")
     })
   });
 
@@ -23,14 +25,17 @@ function startTimer() {
     extraSeconds < 10 ? extraSeconds = '0' + extraSeconds : extraSeconds
     countdown.innerHTML = minutes + ':' + extraSeconds
     if (duration <= 0 && short.classList.contains('active')) {
+      audio.play()
       clearInterval(myInterval)
       countdown.innerHTML = short.dataset.time / 60 + ':00'
       duration = short.dataset.time
     } else if (duration <= 0 && focus.classList.contains('active')) {
+      audio.play()
       clearInterval(myInterval)
       countdown.innerHTML = focus.dataset.time / 60 + ':00'
       duration = focus.dataset.time
     } else if (duration <= 0 && long.classList.contains('active')) {
+      audio.play()
       clearInterval(myInterval)
       countdown.innerHTML = long.dataset.time / 60 + ':00'
       duration = long.dataset.time
