@@ -1,23 +1,31 @@
 const short = document.querySelector(".buttons__short")
 const countdown = document.querySelector(".countdown")
+const start = document.querySelector(".start-button")
 
-function startTimer() {
-  let duration = this.dataset.time;
+let duration;
+
+function startTimer() { 
   const myInterval = setInterval(function () { 
     duration --
     let minutes = Math.floor(duration / 60)
     let extraSeconds = duration % 60;
-    if (duration == 0) {
-      clearInterval(myInterval)
-      countdown.innerHTML = minutes + ':' + extraSeconds
-    }
     extraSeconds < 10 ? extraSeconds = '0' + extraSeconds : extraSeconds
     countdown.innerHTML = minutes + ':' + extraSeconds
-    console.log(countdown.innerHTML)
+    if (duration == 0 && short.classList.contains('active')) {
+      clearInterval(myInterval)
+      countdown.innerHTML = short.dataset.time / 60 + ':00'
+    }
   }, 10);
 }
 
-short.addEventListener("click", startTimer)
+start.addEventListener("click", startTimer)
+
+short.addEventListener("click", (e) => {
+  duration = short.dataset.time
+  countdown.innerHTML = duration / 60 + ':00'
+  short.classList.add('active')
+})
+
 
 
 
