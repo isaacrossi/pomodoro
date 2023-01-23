@@ -3,12 +3,18 @@ const focus = document.querySelector(".buttons__focus")
 const long = document.querySelector(".buttons__long")
 const countdown = document.querySelector(".countdown")
 const start = document.querySelector(".start-button")
-const buttonsDiv = document.querySelector(".buttons")
-const buttons = buttonsDiv.querySelectorAll("button")
+
+const buttons = document.querySelectorAll('div.buttons button')
 
 let duration;
 
 function startTimer() { 
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      clearInterval(myInterval)
+    })
+  });
 
   const myInterval = setInterval(function () { 
     duration --
@@ -16,15 +22,18 @@ function startTimer() {
     let extraSeconds = duration % 60;
     extraSeconds < 10 ? extraSeconds = '0' + extraSeconds : extraSeconds
     countdown.innerHTML = minutes + ':' + extraSeconds
-    if (duration == 0 && short.classList.contains('active')) {
+    if (duration <= 0 && short.classList.contains('active')) {
       clearInterval(myInterval)
       countdown.innerHTML = short.dataset.time / 60 + ':00'
-    } else if (duration == 0 && focus.classList.contains('active')) {
+      duration = short.dataset.time
+    } else if (duration <= 0 && focus.classList.contains('active')) {
       clearInterval(myInterval)
       countdown.innerHTML = focus.dataset.time / 60 + ':00'
-    } else if (duration == 0 && long.classList.contains('active')) {
+      duration = focus.dataset.time
+    } else if (duration <= 0 && long.classList.contains('active')) {
       clearInterval(myInterval)
       countdown.innerHTML = long.dataset.time / 60 + ':00'
+      duration = long.dataset.time
     }
   }, 10);
 }
@@ -56,11 +65,3 @@ long.addEventListener("click", (e) => {
   short.classList.remove('active')
 })
 
-
-
-
-
-// total seconds in 5 minutes is 300 seconds
-// divide 300 seconds by 60 gives us 5 minutes
-// there are 60 seconds in every minute
-// once 60 seconds has passed minus minutes by 1 
