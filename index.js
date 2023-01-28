@@ -13,9 +13,11 @@ let myInterval;
 
 function startTimer() {
 
-  isPaused = !isPaused;
+  audio.currentTime = 0;
+  audio.pause()
 
-  isPaused ? start.innerHTML = "start" : start.innerHTML = "pause"
+  isPaused = !isPaused;
+  isPaused ? start.innerHTML = "start" : start.innerHTML = "Pause"
 
   buttons.forEach(button => {
     button.addEventListener('click', () => {
