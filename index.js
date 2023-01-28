@@ -1,16 +1,15 @@
 const short = document.querySelector(".buttons__short")
-const focus = document.querySelector(".buttons__focus")
+const foc = document.querySelector(".buttons__focus")
 const long = document.querySelector(".buttons__long")
 const countdown = document.querySelector(".countdown")
 const start = document.querySelector(".start-button")
-
 const buttons = document.querySelectorAll('div.buttons button')
+const audio = new Audio('alarm.mp3')
 
 let isPaused = true;
-
-let duration = focus.dataset.time
+let duration = foc.dataset.time;
 let myInterval;
-const audio = new Audio('alarm.mp3')
+
 
 function startTimer() {
 
@@ -34,6 +33,7 @@ function startTimer() {
     let minutes = Math.floor(duration / 60)
     let extraSeconds = duration % 60;
     extraSeconds < 10 ? extraSeconds = '0' + extraSeconds : extraSeconds
+    minutes < 10 ? minutes = '0' + minutes : extraSeconds
     countdown.innerHTML = minutes + ':' + extraSeconds
 
     if (duration <= 0 && short.classList.contains('active')) {
@@ -43,13 +43,6 @@ function startTimer() {
       countdown.innerHTML = short.dataset.time / 60 + ':00'
       duration = short.dataset.time
       start.innerHTML = "Start"
-    } else if (duration <= 0 && focus.classList.contains('active')) {
-      isPaused = true;
-      audio.play()
-      clearInterval(myInterval)
-      countdown.innerHTML = focus.dataset.time / 60 + ':00'
-      duration = focus.dataset.time
-      start.innerHTML = "Start"
     } else if (duration <= 0 && long.classList.contains('active')) {
       isPaused = true;
       audio.play()
@@ -57,44 +50,31 @@ function startTimer() {
       countdown.innerHTML = long.dataset.time / 60 + ':00'
       duration = long.dataset.time
       start.innerHTML = "Start"
+    } else if (duration <= 0 && foc.classList.contains('active')) {
+      clearInterval(myInterval)
+      isPaused = true;
+      audio.play()
+      countdown.innerHTML = foc.dataset.time / 60 + ':00'
+      duration = foc.dataset.time
+      start.innerHTML = "Start"
     }
-
     console.log(duration)
-  }, 1000);
+  }, 0.1);
 
 }
 
-
 start.addEventListener("click", startTimer)
 
-short.addEventListener("click", (e) => {
-  duration = short.dataset.time
-  countdown.innerHTML = duration / 60 + ':00'
-  short.classList.add('active')
-  focus.classList.remove('active')
-  long.classList.remove('active')
-  isPaused = true;
-  start.innerHTML = "Start"
+buttons.forEach(button => {
+  button.addEventListener('click', (e) => {
+    document.querySelector('button.active').classList.remove('active');
+    e.target.classList.add('active');
+    duration = button.dataset.time
+    countdown.innerHTML = duration / 60 + ':00'
+    isPaused = true;
+    start.innerHTML = "Start"
+    audio.pause()
+  })
 })
 
-
-focus.addEventListener("click", (e) => {
-  duration = focus.dataset.time
-  countdown.innerHTML = duration / 60 + ':00'
-  focus.classList.add('active')
-  short.classList.remove('active')
-  long.classList.remove('active')
-  isPaused = true;
-  start.innerHTML = "Start"
-})
-
-long.addEventListener("click", (e) => {
-  duration = long.dataset.time
-  countdown.innerHTML = duration / 60 + ':00'
-  long.classList.add('active')
-  focus.classList.remove('active')
-  short.classList.remove('active')
-  isPaused = true;
-  start.innerHTML = "Start"
-})
 
