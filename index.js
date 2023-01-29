@@ -38,30 +38,25 @@ function startTimer() {
     minutes < 10 ? minutes = '0' + minutes : extraSeconds
     countdown.innerHTML = minutes + ':' + extraSeconds
 
-    if (duration <= 0 && short.classList.contains('active')) {
+    if (duration <= 0) {
       isPaused = true;
       audio.play()
       clearInterval(myInterval)
-      countdown.innerHTML = short.dataset.time / 60 + ':00'
-      duration = short.dataset.time
-      start.innerHTML = "Start"
-    } else if (duration <= 0 && long.classList.contains('active')) {
-      isPaused = true;
-      audio.play()
-      clearInterval(myInterval)
-      countdown.innerHTML = long.dataset.time / 60 + ':00'
-      duration = long.dataset.time
-      start.innerHTML = "Start"
-    } else if (duration <= 0 && foc.classList.contains('active')) {
-      clearInterval(myInterval)
-      isPaused = true;
-      audio.play()
-      countdown.innerHTML = foc.dataset.time / 60 + ':00'
-      duration = foc.dataset.time
       start.innerHTML = "Start"
     }
+
+    if (duration <= 0 && short.classList.contains('active')) {
+      countdown.innerHTML = short.dataset.time / 60 + ':00'
+      duration = short.dataset.time
+    } else if (duration <= 0 && long.classList.contains('active')) {
+      countdown.innerHTML = long.dataset.time / 60 + ':00'
+      duration = long.dataset.time
+    } else if (duration <= 0 && foc.classList.contains('active')) {
+      countdown.innerHTML = foc.dataset.time / 60 + ':00'
+      duration = foc.dataset.time
+    }
     console.log(duration)
-  }, 0.1);
+  }, 1000);
 
 }
 
