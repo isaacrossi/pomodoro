@@ -619,7 +619,7 @@ video {
 }
 
 .active {
-  border: solid red 3px;
+  border: solid #075985 2px;
 }
 
 .focus\:bg-sky-100:focus {
